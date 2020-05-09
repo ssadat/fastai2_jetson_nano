@@ -17,7 +17,7 @@
 # Note that NVIDIA no longer supports 1.x cards, as of CUDA 6.5.
 # See http://developer.nvidia.com/cuda-gpus
 #
-GPU_TARGET = Maxwell
+GPU_TARGET ?= Maxwell
 
 # --------------------
 # programs
@@ -61,12 +61,12 @@ LIB      += -lcublas -lcusparse -lcudart -lcudadevrt
 # --------------------
 # directories
 
-OPENBLASDIR = /usr/lib/aarch64-linux-gnu/openblas
-CUDADIR = /usr/local/cuda
+OPENBLASDIR ?= /usr/lib/aarch64-linux-gnu/openblas
+CUDADIR ?= /usr/local/cuda
 -include make.check-openblas
 -include make.check-cuda
 
 LIBDIR    = -L$(CUDADIR)/lib64 \
-            -L$(OPENBLASDIR)/
+            -L$(OPENBLASDIR)
 
 INC       = -I$(CUDADIR)/include
