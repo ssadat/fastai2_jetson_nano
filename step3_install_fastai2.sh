@@ -117,6 +117,7 @@ export USE_PYTORCH_QNNPACK=0
 export TORCH_CUDA_ARCH_LIST="5.3"
 export PYTORCH_BUILD_VERSION=1.5.0
 export PYTORCH_BUILD_NUMBER=1
+export BLAS=OpenBLAS
 python3 setup.py bdist_wheel
 pip3 install dist/torch-1.5.0-cp36-cp36m-linux_aarch64.whl
 cd ~/
