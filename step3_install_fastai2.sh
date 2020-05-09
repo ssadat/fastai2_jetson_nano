@@ -37,10 +37,9 @@ pip3 install wheel
 # The authors of MAGMA does not offer binary builds, so it needs to be compiled from source
 now=`date`
 echo "Start installation of MAGMA at: $now"
-# The default jetpack 4.4 installation comes with stock blas and lapack which are
-# not correctly linked
-echo $PW | sudo -k --stdin ln -s /usr/lib/aarch64-linux-gnu/libblas.so.3 /usr/lib/aarch64-linux-gnu/libblas.so
-echo $PW | sudo -k --stdin ln -s /usr/lib/aarch64-linux-gnu/liblapack.so.3 /usr/lib/aarch64-linux-gnu/liblapack.so
+echo $PW | sudo -k --stdin apt remove -y libblas3
+echo $PW | sudo -k --stdin apt remove -y liblapack3
+echo $PW | sudo -k --stdin apt install -y libopenblas-dev
 echo $PW | sudo -k --stdin apt install -y gfortran
 echo $PW | sudo -k --stdin apt install -y cmake
 echo $PW | sudo -k --stdin apt install -y libnuma-dev #Used for pytorch later
@@ -50,8 +49,6 @@ tar -xf magma-2.5.3.tar.gz
 # This file is based on the openblas example in MAGMA, with mior tweaks for the jetson nano architecture (Maxwell) and openblas library location
 cp ~/fastai2_jetson_nano/make.inc.jetson ~/magma-2.5.3/make.inc
 cd magma-2.5.3
-export OPENBLASDIR=/usr/lib/aarch64-linux-gnu
-export CUDADIR=/usr/local/cuda
 export PATH=$PATH:/usr/local/cuda-10.2/bin
 make
 echo $PW | sudo -k --stdin --preserve-env make install prefix=/usr/local/magma
