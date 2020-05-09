@@ -53,18 +53,16 @@ CFLAGS   += -std=c99
 # --------------------
 # libraries
 
-# gcc with Stock BLAS and LAPACK
-LIB       = -lblas -llapack
+# gcc with OpenBLAS (includes LAPACK)
+LIB       = -lopenblas
 
 LIB      += -lcublas -lcusparse -lcudart -lcudadevrt
-
 
 # --------------------
 # directories
 
-# define library directories preferably in your environment, or here.
-#OPENBLASDIR ?= /usr/local/openblas
-#CUDADIR ?= /usr/local/cuda
+OPENBLASDIR = /usr/lib/aarch64-linux-gnu/openblas
+CUDADIR = /usr/local/cuda
 -include make.check-openblas
 -include make.check-cuda
 
