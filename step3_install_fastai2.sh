@@ -25,20 +25,20 @@ echo $PW | sudo -k --stdin apt -y upgrade
 echo $PW | sudo -k --stdin apt -y autoremove
 
 # Create a virtual environment and activate it
-echo $PW | sudo -k --stdin apt install -y python3-venv
-echo $PW | sudo -k --stdin apt install -y python3-pip
-cd ~/
-python3 -m venv ~/python-envs/fastai
-source ~/python-envs/fastai/bin/activate
-pip3 install wheel
+# echo $PW | sudo -k --stdin apt install -y python3-venv
+# echo $PW | sudo -k --stdin apt install -y python3-pip
+# cd ~/
+# python3 -m venv ~/python-envs/fastai
+# source ~/python-envs/fastai/bin/activate
+# pip3 install wheel
 
 # Install MAGMA from source
 # Since fastai requires pytorch to be compiled MAGMA, MAGMA needs to be installed first
 # The authors of MAGMA does not offer binary builds, so it needs to be compiled from source
 now=`date`
 echo "Start installation of MAGMA at: $now"
-echo $PW | sudo -k --stdin apt remove -y libblas3
-echo $PW | sudo -k --stdin apt remove -y liblapack3
+# echo $PW | sudo -k --stdin apt remove -y libblas3
+# echo $PW | sudo -k --stdin apt remove -y liblapack3
 echo $PW | sudo -k --stdin apt install -y libopenblas-dev
 echo $PW | sudo -k --stdin apt install -y gfortran
 echo $PW | sudo -k --stdin apt install -y cmake
@@ -171,7 +171,7 @@ pip3 install nbdev
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 jupyter labextension install @jupyterlab/statusbar
 jupyter lab --generate-config
-# Download a small script that sets the virtual environment, divines the IP address, and starts jupyter notebook with the right IP
+# Download a small script that divines the IP address, and starts jupyter notebook with the right IP
 cp ~/fastai2_jetson_nano/start_fastai_jupyter.sh start_fastai_jupyter.sh
 # Starting jpyter using this script will mean your jupyter instance is killed when you log out or your ssh connection drops
 # If you want jupyter to work persistently, use the tmux script above
