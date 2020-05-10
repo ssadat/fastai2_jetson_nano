@@ -23,14 +23,15 @@ echo "Start Installation of fastai2 on jetson nano at: $now"
 echo $PW | sudo -k --stdin apt -y update
 echo $PW | sudo -k --stdin apt -y upgrade
 echo $PW | sudo -k --stdin apt -y autoremove
+echo $PW | sudo -k --stdin apt install -y python3-pip
+pip3 install wheel
 
 # Create a virtual environment and activate it
 # echo $PW | sudo -k --stdin apt install -y python3-venv
-# echo $PW | sudo -k --stdin apt install -y python3-pip
 # cd ~/
 # python3 -m venv ~/python-envs/fastai
 # source ~/python-envs/fastai/bin/activate
-# pip3 install wheel
+
 
 # Install MAGMA from source
 # Since fastai requires pytorch to be compiled MAGMA, MAGMA needs to be installed first
@@ -49,6 +50,9 @@ tar -xf magma-2.5.3.tar.gz
 # This file is based on the openblas example in MAGMA, with mior tweaks for the jetson nano architecture (Maxwell) and openblas library location
 cp ~/fastai2_jetson_nano/make.inc.jetson ~/magma-2.5.3/make.inc
 cd magma-2.5.3
+export PATH=$PATH:/usr/local/cuda-10.2/bin
+export OPENBLASDIR=/usr/lib/aarch64-linux-gnu/openblas
+export CUDADIR=/usr/local/cuda
 export PATH=$PATH:/usr/local/cuda-10.2/bin
 make
 echo $PW | sudo -k --stdin --preserve-env make install prefix=/usr/local/magma
