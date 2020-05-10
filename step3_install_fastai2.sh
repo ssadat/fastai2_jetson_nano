@@ -49,7 +49,7 @@ tar -xf magma-2.5.3.tar.gz
 # Magma needs a make.inc file to tell it which Nvidia architectures to compile for and where to find the blas libraries
 cp ~/fastai2_jetson_nano/make.inc.openblas ~/magma-2.5.3/make.inc # Also edited the lib include directory
 cd magma-2.5.3
-#export GPU_TARGET=Maxwell # Jetson Nano Has a Maxwell GPU
+export GPU_TARGET=Maxwell # Jetson Nano Has a Maxwell GPU
 export OPENBLASDIR=/usr/lib/aarch64-linux-gnu/openblas
 export CUDADIR=/usr/local/cuda
 export PATH=$PATH:/usr/local/cuda-10.2/bin
