@@ -17,7 +17,7 @@
 # Note that NVIDIA no longer supports 1.x cards, as of CUDA 6.5.
 # See http://developer.nvidia.com/cuda-gpus
 #
-GPU_TARGET ?= Maxwell
+# GPU_TARGET ?= Maxwell
 
 # --------------------
 # programs
