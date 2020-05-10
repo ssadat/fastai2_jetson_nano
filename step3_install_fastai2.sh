@@ -23,8 +23,6 @@ echo "Start Installation of fastai2 on jetson nano at: $now"
 echo $PW | sudo -k --stdin apt -y update
 echo $PW | sudo -k --stdin apt -y upgrade
 echo $PW | sudo -k --stdin apt -y autoremove
-echo $PW | sudo -k --stdin apt install -y python3-pip
-pip3 install wheel
 
 # Create a virtual environment and activate it
 # echo $PW | sudo -k --stdin apt install -y python3-venv
@@ -32,6 +30,8 @@ pip3 install wheel
 # python3 -m venv ~/python-envs/fastai
 # source ~/python-envs/fastai/bin/activate
 
+echo $PW | sudo -k --stdin apt install -y python3-pip
+pip3 install wheel
 
 # Install MAGMA from source
 # Since fastai requires pytorch to be compiled MAGMA, MAGMA needs to be installed first
@@ -47,10 +47,9 @@ echo $PW | sudo -k --stdin apt install -y libnuma-dev #Used for pytorch later
 wget http://icl.utk.edu/projectsfiles/magma/downloads/magma-2.5.3.tar.gz
 tar -xf magma-2.5.3.tar.gz
 # Magma needs a make.inc file to tell it which Nvidia architectures to compile for and where to find the blas libraries
-# This file is based on the openblas example in MAGMA, with mior tweaks for the jetson nano architecture (Maxwell) and openblas library location
 cp ~/magma-2.5.3/make.inc-examples/make.inc.openblas ~/magma-2.5.3/make.inc
 cd magma-2.5.3
-export GPU_TARGET=Maxwell
+export GPU_TARGET=Maxwell # Jetson Nano Has a Maxwell GPU
 export OPENBLASDIR=/usr/lib/aarch64-linux-gnu/openblas
 export CUDADIR=/usr/local/cuda
 export PATH=$PATH:/usr/local/cuda-10.2/bin
