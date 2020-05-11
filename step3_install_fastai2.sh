@@ -87,8 +87,6 @@ pip3 install jupyter jupyterlab
 pip3 install pynvx
 pip3 install pandas
 pip3 install fire
-pip3 install fastcore
-pip3 install fastprogress
 pip3 install graphviz
 pip3 install ipykernel
 pip3 install azure-cognitiveservices-search-imagesearch
@@ -147,6 +145,8 @@ cd fastai2/
 patch -p1 < ~/fastai2_jetson_nano/fastai2_torch_1_5_0.patch
 pip3 install -e ".[dev]"
 cd ~/
+
+pip3 install fastprogress
 
 git clone https://github.com/fastai/course-v4 # clone course notebooks
 git clone https://github.com/fastai/fastbook # clone course book
