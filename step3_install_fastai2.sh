@@ -67,7 +67,7 @@ echo $PW | sudo -k --stdin apt install -y graphviz
 echo $PW | sudo -k --stdin apt-get -y install libjpeg8-dev libpng-dev
 
 # Install dependencies for torch & torchvision
-echo $PW | sudo -k --stdin apt-get -y install openmpi-bin
+echo $PW | sudo -k --stdin apt-get -y install openmpi-bin libjpeg-dev zlib1g-dev
 
 # Install dependencies for matplotlib
 echo $PW | sudo -k --stdin apt-get -y install libfreetype6-dev
