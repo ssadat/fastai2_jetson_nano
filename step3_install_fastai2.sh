@@ -120,7 +120,7 @@ export PYTORCH_BUILD_VERSION=1.5.0
 export PYTORCH_BUILD_NUMBER=1
 export BLAS=OpenBLAS
 python3 setup.py bdist_wheel
-echo $PW | sudo -k --stdin -H pip3 install dist/torch-1.5.0-cp36-cp36m-linux_aarch64.whl
+echo $PW | sudo -k --stdin pip3 install dist/torch-1.5.0-cp36-cp36m-linux_aarch64.whl
 cd ~/
 
 # Build torchvision from source
@@ -128,7 +128,7 @@ now=`date`
 echo "Starting installation of torchvision at: $now"
 git clone --branch v0.6.0 https://github.com/pytorch/vision torchvision
 cd torchvision
-echo $PW | sudo -k --stdin -H python3 setup.py install
+echo $PW | sudo -k --stdin python3 setup.py install
 cd ~/
 
 # Clone editable installs of fastcore and fastai2 as well as fastai2 course material
@@ -137,13 +137,13 @@ echo "Starting installation of fastai at:" $now
 
 git clone https://github.com/fastai/fastcore # install fastcore
 cd fastcore
-echo $PW | sudo -k --stdin -H pip3 install -e ".[dev]"
+pip3 install -e ".[dev]" --no-deps
 cd ~/
 
 git clone https://github.com/fastai/fastai2 # install fastai and patch augment.py
 cd fastai2/
 patch -p1 < ~/fastai2_jetson_nano/fastai2_torch_1_5_0.patch
-echo $PW | sudo -k --stdin -H pip3 install -e ".[dev]"
+pip3 install -e ".[dev]" --no-deps
 cd ~/
 
 pip3 install fastprogress
