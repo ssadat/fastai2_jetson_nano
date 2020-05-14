@@ -24,7 +24,7 @@ echo $PW | sudo -k --stdin apt -y update
 echo $PW | sudo -k --stdin apt -y upgrade
 echo $PW | sudo -k --stdin apt -y autoremove
 
-Create a virtual environment and activate it
+# Create a virtual environment and activate it
 echo $PW | sudo -k --stdin apt install -y python3-venv
 cd ~/
 python3 -m venv ~/python-envs/fastai
