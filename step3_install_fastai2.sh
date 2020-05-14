@@ -24,11 +24,11 @@ echo $PW | sudo -k --stdin apt -y update
 echo $PW | sudo -k --stdin apt -y upgrade
 echo $PW | sudo -k --stdin apt -y autoremove
 
-# Create a virtual environment and activate it
-# echo $PW | sudo -k --stdin apt install -y python3-venv
-# cd ~/
-# python3 -m venv ~/python-envs/fastai
-# source ~/python-envs/fastai/bin/activate
+Create a virtual environment and activate it
+echo $PW | sudo -k --stdin apt install -y python3-venv
+cd ~/
+python3 -m venv ~/python-envs/fastai
+source ~/python-envs/fastai/bin/activate
 
 echo $PW | sudo -k --stdin apt install -y python3-pip
 pip3 install wheel
@@ -48,7 +48,7 @@ wget http://icl.utk.edu/projectsfiles/magma/downloads/magma-2.5.3.tar.gz
 tar -xf magma-2.5.3.tar.gz
 # Magma needs a make.inc file to tell it which Nvidia architectures to compile for and where to find the blas libraries
 cp ~/fastai2_jetson_nano/make.inc.openblas ~/magma-2.5.3/make.inc # Also edited the lib include directory
-cd magma-2.5.3
+cd ~/magma-2.5.3
 export GPU_TARGET=Maxwell # Jetson Nano Has a Maxwell GPU
 export OPENBLASDIR=/usr/lib/aarch64-linux-gnu/openblas
 export CUDADIR=/usr/local/cuda
@@ -95,6 +95,7 @@ pip3 install numpy
 pip3 install scipy
 pip3 install scikit-learn
 pip3 install pyyaml
+pip3 install future
 BLIS_ARCH="generic" pip3 install spacy
 pip3 install matplotlib
 
@@ -107,7 +108,7 @@ pip3 install ninja
 now=`date`
 echo "Start installation of pytorch at: $now"
 git clone --recursive https://github.com/pytorch/pytorch
-cd pytorch
+cd ~/pytorch
 wget https://gist.githubusercontent.com/dusty-nv/ce51796085178e1f38e3c6a1663a93a1/raw/44dc4b13095e6eb165f268e3c163f46a4a11110d/pytorch-diff-jetpack-4.4.patch -O pytorch-diff-jetpack-4.4.patch
 patch -p1 < pytorch-diff-jetpack-4.4.patch
 pip3 install -r requirements.txt
@@ -120,15 +121,16 @@ export PYTORCH_BUILD_VERSION=1.5.0
 export PYTORCH_BUILD_NUMBER=1
 export BLAS=OpenBLAS
 python3 setup.py bdist_wheel
-echo $PW | sudo -k --stdin pip3 install dist/torch-1.5.0-cp36-cp36m-linux_aarch64.whl
+cd ~/pytorch/dist
+pip3 install torch-1.5.0-cp36-cp36m-linux_aarch64.whl --user
 cd ~/
 
 # Build torchvision from source
 now=`date`
 echo "Starting installation of torchvision at: $now"
 git clone --branch v0.6.0 https://github.com/pytorch/vision torchvision
-cd torchvision
-echo $PW | sudo -k --stdin python3 setup.py install
+cd ~/torchvision
+python3 setup.py install --user
 cd ~/
 
 # Clone editable installs of fastcore and fastai2 as well as fastai2 course material
@@ -136,14 +138,14 @@ now=`date`
 echo "Starting installation of fastai at:" $now
 
 git clone https://github.com/fastai/fastcore # install fastcore
-cd fastcore
-pip3 install -e ".[dev]" --no-deps
+cd ~/fastcore
+pip3 install -e ".[dev]"
 cd ~/
 
 git clone https://github.com/fastai/fastai2 # install fastai and patch augment.py
-cd fastai2/
+cd ~/fastai2
 patch -p1 < ~/fastai2_jetson_nano/fastai2_torch_1_5_0.patch
-pip3 install -e ".[dev]" --no-deps
+pip3 install -e ".[dev]"
 cd ~/
 
 pip3 install fastprogress
