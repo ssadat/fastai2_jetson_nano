@@ -122,7 +122,7 @@ export PYTORCH_BUILD_NUMBER=1
 export BLAS=OpenBLAS
 python3 setup.py bdist_wheel
 cd ~/pytorch/dist
-pip3 install torch-1.5.0-cp36-cp36m-linux_aarch64.whl --user
+pip3 install torch-1.5.0-cp36-cp36m-linux_aarch64.whl
 cd ~/
 
 # Build torchvision from source
@@ -130,7 +130,7 @@ now=`date`
 echo "Starting installation of torchvision at: $now"
 git clone --branch v0.6.0 https://github.com/pytorch/vision torchvision
 cd ~/torchvision
-python3 setup.py install --user
+python3 setup.py install
 cd ~/
 
 # Clone editable installs of fastcore and fastai2 as well as fastai2 course material
