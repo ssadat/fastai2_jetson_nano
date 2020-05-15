@@ -38,8 +38,8 @@ pip3 install wheel
 # The authors of MAGMA does not offer binary builds, so it needs to be compiled from source
 now=`date`
 echo "Start installation of MAGMA at: $now"
-# echo $PW | sudo -k --stdin apt remove -y libblas3
-# echo $PW | sudo -k --stdin apt remove -y liblapack3
+echo $PW | sudo -k --stdin apt remove -y libblas3
+echo $PW | sudo -k --stdin apt remove -y liblapack3
 echo $PW | sudo -k --stdin apt install -y libopenblas-dev
 echo $PW | sudo -k --stdin apt install -y gfortran
 echo $PW | sudo -k --stdin apt install -y cmake
