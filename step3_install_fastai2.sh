@@ -143,13 +143,13 @@ cd ~/fastcore
 pip3 install -e ".[dev]"
 cd ~/
 
+pip3 install fastprogress
+
 git clone https://github.com/fastai/fastai2 # install fastai and patch augment.py
 cd ~/fastai2
 patch -p1 < ~/fastai2_jetson_nano/fastai2_torch_1_5_0.patch
 pip3 install -e ".[dev]"
 cd ~/
-
-pip3 install fastprogress
 
 git clone https://github.com/fastai/course-v4 # clone course notebooks
 git clone https://github.com/fastai/fastbook # clone course book
