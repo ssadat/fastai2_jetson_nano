@@ -73,12 +73,11 @@ cd ~/
 python3 -m venv ~/python-envs/fastai
 source ~/python-envs/fastai/bin/activate
 
-pip3 install wheel
-
 now=`date`
 echo "Start installation of various library dependencies at: $now"
 
 # Install dependencies for scipy and scikit-learn, torch, torchvision, jupyter notebook and fastai
+pip3 install wheel
 pip3 install cython
 pip3 install kiwisolver
 pip3 install freetype-py
