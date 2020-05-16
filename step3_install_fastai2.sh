@@ -47,8 +47,18 @@ export PATH=$PATH:/usr/local/cuda-10.2/bin
 make
 echo $PW | sudo -k --stdin --preserve-env make install prefix=/usr/local/magma
 cd ~/magma-2.5.3/testing
+
+echo "Start first run of MAGMA at: $now"
 ./run_tests.py --precision s --small
 cd ~/
+
+echo "Start installation of various library dependencies with apt at: $now"
+
+# Create a virtual environment and activate it
+echo $PW | sudo -k --stdin apt install -y python3-venv
+cd ~/
+python3 -m venv ~/python-envs/fastai
+source ~/python-envs/fastai/bin/activate
 
 # Install dependencies for fastai
 echo $PW | sudo -k --stdin apt install -y graphviz
@@ -67,14 +77,8 @@ echo $PW | sudo -k --stdin apt install -y python-cffi
 echo $PW | sudo -k --stdin apt install -y libffi-dev
 echo $PW | sudo -k --stdin apt install -y libssl-dev
 
-# Create a virtual environment and activate it
-echo $PW | sudo -k --stdin apt install -y python3-venv
-cd ~/
-python3 -m venv ~/python-envs/fastai
-source ~/python-envs/fastai/bin/activate
-
 now=`date`
-echo "Start installation of various library dependencies at: $now"
+echo "Start installation of various library dependencies with pip at: $now"
 
 # Install dependencies for scipy and scikit-learn, torch, torchvision, jupyter notebook and fastai
 pip3 install wheel
