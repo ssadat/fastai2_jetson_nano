@@ -49,7 +49,7 @@ echo $PW | sudo -k --stdin --preserve-env make install prefix=/usr/local/magma
 cd ~/magma-2.5.3/testing
 
 echo "Start first run of MAGMA at: $now"
-./run_tests.py --precision s --small
+./run_tests.py --precision s --small --ngpu 1
 cd ~/
 
 echo "Start installation of various library dependencies with apt at: $now"
