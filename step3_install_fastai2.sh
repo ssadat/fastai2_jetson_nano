@@ -46,6 +46,8 @@ export CUDADIR=/usr/local/cuda
 export PATH=$PATH:/usr/local/cuda-10.2/bin
 make
 echo $PW | sudo -k --stdin --preserve-env make install prefix=/usr/local/magma
+cd ~/magma-2.5.3/testing
+./run_tests.py --precision s --small
 cd ~/
 
 # Install dependencies for fastai
