@@ -24,12 +24,14 @@ echo $PW | sudo -k --stdin apt -y update
 echo $PW | sudo -k --stdin apt -y upgrade
 echo $PW | sudo -k --stdin apt -y autoremove
 
+echo $PW | sudo -k --stdin apt install -y python3-pip
+
 # Create a virtual environment and activate it
 echo $PW | sudo -k --stdin apt install -y python3-venv 
-echo $PW | sudo -k --stdin apt install -y python3-pip
 cd ~/
 python3 -m venv ~/python-envs/fastai
 source ~/python-envs/fastai/bin/activate
+
 pip3 install wheel
 pip3 install setuptools
 
@@ -64,6 +66,9 @@ cd ~/
 
 now=`date`
 echo "Start installation of various library dependencies with apt at: $now"
+
+# Install dependencies for kiwisolver
+echo $PW | sudo -k --stdin apt install -y python3-dev
 
 # Install dependencies for fastai
 echo $PW | sudo -k --stdin apt install -y graphviz
