@@ -24,6 +24,15 @@ echo $PW | sudo -k --stdin apt -y update
 echo $PW | sudo -k --stdin apt -y upgrade
 echo $PW | sudo -k --stdin apt -y autoremove
 
+# Create a virtual environment and activate it
+echo $PW | sudo -k --stdin apt install -y python3-venv 
+echo $PW | sudo -k --stdin apt install -y python3-pip
+cd ~/
+python3 -m venv ~/python-envs/fastai
+source ~/python-envs/fastai/bin/activate
+pip3 install wheel
+pip3 install setuptools
+
 # Install MAGMA from source
 # Since fastai requires pytorch to be compiled MAGMA, MAGMA needs to be installed first
 # The authors of MAGMA does not offer binary builds, so it needs to be compiled from source
@@ -46,19 +55,15 @@ export CUDADIR=/usr/local/cuda
 export PATH=$PATH:/usr/local/cuda-10.2/bin
 make
 echo $PW | sudo -k --stdin --preserve-env make install prefix=/usr/local/magma
-cd ~/magma-2.5.3/testing
 
+now=`date`
 echo "Start first run of MAGMA at: $now"
+cd ~/magma-2.5.3/testing
 ./run_tests.py --precision s --small --ngpu 1
 cd ~/
 
+now=`date`
 echo "Start installation of various library dependencies with apt at: $now"
-
-# Create a virtual environment and activate it
-echo $PW | sudo -k --stdin apt install -y python3-venv
-cd ~/
-python3 -m venv ~/python-envs/fastai
-source ~/python-envs/fastai/bin/activate
 
 # Install dependencies for fastai
 echo $PW | sudo -k --stdin apt install -y graphviz
@@ -81,7 +86,6 @@ now=`date`
 echo "Start installation of various library dependencies with pip at: $now"
 
 # Install dependencies for scipy and scikit-learn, torch, torchvision, jupyter notebook and fastai
-pip3 install wheel
 pip3 install cython
 pip3 install kiwisolver
 pip3 install freetype-py
@@ -104,7 +108,6 @@ BLIS_ARCH="generic" pip3 install spacy
 pip3 install matplotlib
 
 # Install dependencies for py torch build
-pip3 install setuptools
 pip3 install scikit-build
 pip3 install ninja
 
@@ -157,21 +160,9 @@ cd ~/
 git clone https://github.com/fastai/course-v4 # clone course notebooks
 git clone https://github.com/fastai/fastbook # clone course book
 
-# Install tmux: This section is optional, comment out if you do not want to use tmux
-# tmux allows you to log out and leave jupyter notebook running
-# jetston-stas provides a very attractive way to monitor memory usage
-# to use tmux, press command-b followed by 0,2 or 3 to switch between jtop, a terminal and jupyter's output
-now=`date`
-echo "Starting installation of tmux at: $now"
-echo $PW | sudo -k --stdin apt install tmux
-echo $PW | sudo -k --stdin -H pip3 install -U jetson-stats
-cp ~/fastai2_jetson_nano/start_fastai_tmux.sh start_fastai_tmux.sh
-chmod a+x start_fastai_tmux.sh
-echo $'set -g terminal-overrides \'xterm*:smcup@:rmcup@\'' >> .tmux.conf
-
+#Install Jypiter Notebook
 now=`date`
 echo "Starting installation of jupyter notebook at: $now"
-#Install Jypiter Notebook
 wget https://nodejs.org/dist/v12.16.2/node-v12.16.2-linux-arm64.tar.xz
 tar -xJf node-v12.16.2-linux-arm64.tar.xz
 echo $PW | sudo -k --stdin cp -R node-v12.16.2-linux-arm64/* /usr/local
@@ -180,12 +171,26 @@ pip3 install nbdev
 jupyter labextension install @jupyter-widgets/jupyterlab-manager
 jupyter labextension install @jupyterlab/statusbar
 jupyter lab --generate-config
+
 # Download a small script that divines the IP address, and starts jupyter notebook with the right IP
 cp ~/fastai2_jetson_nano/start_fastai_jupyter.sh start_fastai_jupyter.sh
-# Starting jpyter using this script will mean your jupyter instance is killed when you log out or your ssh connection drops
-# If you want jupyter to work persistently, use the tmux script above
 chmod a+x start_fastai_jupyter.sh
+
+# Starting jpyter using the script above will mean your jupyter instance is killed when you log out or your ssh connection drops
+# If you want jupyter to work persistently, use the tmux script below
+
+# Install tmux: This section is optional, comment out if you do not want to use tmux
+# tmux allows you to log out and leave jupyter notebook running and jetston-stas provides a very attractive way to monitor memory usage
+# to use tmux, press command-b followed by 0,2 or 3 to switch between jtop, a terminal and jupyter's output
+now=`date`
+echo "Starting installation of tmux at: $now"
+echo $PW | sudo -k --stdin apt install tmux
+echo $PW | sudo -k --stdin -H pip3 install -U jetson-stats
+cp ~/fastai2_jetson_nano/start_fastai_tmux.sh start_fastai_tmux.sh
+chmod a+x start_fastai_tmux.sh
+echo $'set -g terminal-overrides \'xterm*:smcup@:rmcup@\'' >> .tmux.conf # sets up same mouse scolling in tmux
+
 echo "As the last step, please choose a jupyter notebook password"
 jupyter notebook password
 
-echo "Now restart the jetson nano and run either start_fastai_tmux.sh or start_fastai_jupyter.sh and connect with your browser to http://(your IP):8888/"
+echo "Now restart the jetson nano, run either ./start_fastai_tmux.sh or ./start_fastai_jupyter.sh and connect with your browser to http://(your IP):8888/"
