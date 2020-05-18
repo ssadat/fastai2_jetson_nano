@@ -40,16 +40,13 @@ pip3 install setuptools
 # The authors of MAGMA does not offer binary builds, so it needs to be compiled from source
 now=`date`
 echo "Start installation of MAGMA at: $now"
-# echo $PW | sudo -k --stdin apt remove -y libblas3
-# echo $PW | sudo -k --stdin apt remove -y liblapack3
 echo $PW | sudo -k --stdin apt install -y libopenblas-dev
 echo $PW | sudo -k --stdin apt install -y gfortran
 echo $PW | sudo -k --stdin apt install -y cmake
-# echo $PW | sudo -k --stdin apt install -y libnuma-dev #Used for pytorch later
 wget http://icl.utk.edu/projectsfiles/magma/downloads/magma-2.5.3.tar.gz
 tar -xf magma-2.5.3.tar.gz
 # Magma needs a make.inc file to tell it which Nvidia architectures to compile for and where to find the blas libraries
-cp ~/fastai2_jetson_nano/make.inc.openblas ~/magma-2.5.3/make.inc # Also edited the lib include directory
+cp ~/fastai2_jetson_nano/make.inc.openblas ~/magma-2.5.3/make.inc 
 cd ~/magma-2.5.3
 export GPU_TARGET=Maxwell # Jetson Nano Has a Maxwell GPU
 export OPENBLASDIR=/usr/lib/aarch64-linux-gnu/openblas
@@ -58,6 +55,9 @@ export PATH=$PATH:/usr/local/cuda-10.2/bin
 make
 echo $PW | sudo -k --stdin --preserve-env make install prefix=/usr/local/magma
 
+# For some reason, MAGMA needs a first run to configure itself or openblas correctly.
+# The first run takes a long time to get started, but after it has run through once,
+# it executes without delay on subsequent occasions.
 now=`date`
 echo "Start first run of MAGMA at: $now"
 cd ~/magma-2.5.3/testing
@@ -109,7 +109,7 @@ pip3 install scipy
 pip3 install scikit-learn
 pip3 install pyyaml
 pip3 install future
-BLIS_ARCH="generic" pip install spacy --no-binary blis
+BLIS_ARCH="generic" pip3 install spacy --no-binary blis
 pip3 install matplotlib
 
 # Install dependencies for py torch build
