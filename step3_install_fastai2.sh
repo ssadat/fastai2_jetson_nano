@@ -109,7 +109,7 @@ pip3 install scipy
 pip3 install scikit-learn
 pip3 install pyyaml
 pip3 install future
-BLIS_ARCH="generic" pip install spacy --no-binary=blis
+BLIS_ARCH="generic" pip install spacy --no-binary blis
 pip3 install matplotlib
 
 # Install dependencies for py torch build
