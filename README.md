@@ -34,7 +34,7 @@ If you are familiar with nohup, this repository also includes an alternate insta
 ```
 ./fastai2_jetson_nano/step3_start_background_build.sh
 ```
-If you use the background build process, you will need to set the jupyter password manually after installation using the commands
+If you use the background build process, you will need to set the jupyter password manually after installation using the commands:
 ```
 source ~/python-envs/fastai/bin/activate
 jupyter notebook password
