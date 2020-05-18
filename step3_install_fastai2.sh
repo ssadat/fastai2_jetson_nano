@@ -64,6 +64,18 @@ cd ~/magma-2.5.3/testing
 python2 run_tests.py --precision s --small --ngpu 1
 cd ~/
 
+# Install BLIS dependenciy for spacy architecture cortexa57
+now=`date`
+echo "Start installation of BLIS at: $now"
+git clone https://github.com/explosion/cython-blis
+cd ~/cython-blis
+git pull && git submodule init && git submodule update && git submodule status
+pip install -r requirements.txt
+./bin/generate-make-jsonl linux cortexa57
+BLIS_ARCH="cortexa57" python setup.py build_ext --inplace
+BLIS_ARCH="cortexa57" python setup.py bdist_wheel
+cd ~/
+
 now=`date`
 echo "Start installation of various library dependencies with apt at: $now"
 
