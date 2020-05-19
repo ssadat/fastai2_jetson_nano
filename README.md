@@ -50,7 +50,7 @@ If you start jypyter notebook in the terminal you are logged into, it will opera
 ```
 ./start_fastai_jupyter.sh
 ```
-If you would like jupyter notebook to continue running after you log out, you can use tmux to host a virtual terminal session. The setup of tmux included in this package (based on [Jeffrey Antony's](https://github.com/jeffreyantony) [tmux repository](https://github.com/jeffreyantony/tmux-fastai/blob/master/tmux-fastai.sh)) creates three termial session: Session 0 for jtop (an atractive resouce manager for the jetson nano, Session 2 containing a linux terminal with the "fastai" virtual environment activated, and Session 3 running juputer notebook. After starting tmux with the command below, you can press Command-b followed by 0,2 or 3 to switch between jtop, the terminal and jupyter's output. Command-b followed by x closes a session.
+If you would like jupyter notebook to continue running after you log out, you can use tmux to host a virtual terminal session. The setup of tmux included in this package (based on [Jeffrey Antony's](https://github.com/jeffreyantony) [tmux repository](https://github.com/jeffreyantony/tmux-fastai/blob/master/tmux-fastai.sh)) creates three termial session: Session 0 for jtop (an atractive resouce manager for the jetson nano, Session 2 containing a linux terminal with the "fastai" virtual environment activated, and Session 3 running juputer notebook. After starting tmux with the command below, you can press Control-b followed by 0,2 or 3 to switch between jtop, the terminal and jupyter's output. Command-b followed by x closes a session.
 ```
 ./start_fastai_tmux.sh
 ```
